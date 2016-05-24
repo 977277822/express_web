@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+<head>
+    <meta charset="UTF-8">
+    <% include common/seo.html  %>
+    <title>点石微投行 - 中国Lifestyle私募股权投资第一平台【官网】</title>
+    <% include common/resources.html  %>
+    
+    <!-- build:css /static/dist/css/home.css -->
+    <link href="/static/skin/home.css" rel="stylesheet">
+    <!-- endbuild -->	
+</head>
+
+<body ng-controller="homeController">
+    <% include common/header.html  %>
+    <!--banner轮播-->
+    <div class="slideBox">
+        <!--小圆点-->
+        <div class="hd">
+            <ul>
+                <li ng-class="{'on' : $index == 0}" ng-repeat="item in home.bannerList"></li>
+            </ul>
+        </div>
+        <!--图片-->
+        <div class="bd dp">
+            <ul>
+                <li ng-repeat="item in home.bannerList" repeat-finish="opt.banneFinish">
+                    <a ng-href="{{item.url}}" target="_blank">
+                        <div ng-style="opt.bg(item.image)"></div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!--左右切换-->
+        <a class="prev" href="javascript:void(0)"></a>
+        <a class="next" href="javascript:void(0)"></a>
+    </div>
+    <!--视频部分-->
+    <div class="introduction">
+        <div class="pc-mp">
+            <div class="video" id="youkuplayer"></div>
+            <div class="brief">
+                <div class="slideTxtBox">
+                    <div class="hd">
+                        <ul>
+                            <li class="on">产品介绍</li>
+                            <li class="">服务人群</li>
+                            <li class="">风险管理</li>
+                        </ul>
+                    </div>
+                    <div class="bd">
+                        <ul class="one">
+                            <li>
+                                <h2>为什么投资优先股、普通股？</h2>
+                                <p>点石微投行是中国第一家聚焦于生活方式（lifestyle）类项目的互联网私募股权投资平台，旨在帮助更多社会大众可以参与到以往被封闭的投资机会中。</p>
+                                <p>优先股项目投资的是现金收益权，产品收益与投资期限基本固定，特点为较低风险、较高收益、起投金额低，适合关注生活品质的高净值个人投资者。</p>
+                                <p>普通股项目投资的是公司股权，无固定期限，退出方式为项目方回购、下轮融资、并购或上市，是高收益同时伴有高风险的投资产品，适合天使和机构投资者。
+                                </p>
+                            </li>
+                        </ul>
+                        <ul class="one">
+                            <li>
+                                <h2>专注服务哪些人群？</h2>
+                                <p>
+                                    如果你是高净值的投资人，
+                                    <br>在这里拥有“参与感”的投资，共享你喜爱的品牌；
+                                </p>
+                                <p>
+                                    如果你是专业的投资机构，
+                                    <br>在这里淘到下一个星巴克、迪士尼、麦当劳；
+                                </p>
+                                <p>
+                                    如果你是“生活方式”创业者，
+                                    <br>打磨品质需要时间，点石助你走过帕爬坡期。
+                                </p>
+                            </li>
+                        </ul>
+                        <ul class="one">
+                            <li>
+                                <h2>如何把控项目风险？</h2>
+                                <p>点石拒绝95%的项目申请者，点石不定位为股权集市。这里只关注有情怀与理想的创业者，这里只服务于关注生活品质的高净值个人和机构投资者。</p>
+                                <p>只关注lifestyle生活方式相关的股权类投资机会，不参与过早期项目，项目由一线机构或新锐GP领投，店铺落地，经营状况公开。</p>
+                                <p>点石是新一代的互联网金融机构，将以往普通投资人接触不到的风险投资、私募股权的专业经验和独特资源投注于互联网时代，更高效地匹配资金和资产，回报社会大众。</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--栏目-->
+    <div ng-if="column.items.length != 0" ng-repeat="column in home.columns" ng-class="{'melt' : $index != 0 , 'financing' : $index == 0}">
+        <div class="pc-main">
+            <div class="subject">
+                <h2 ng-bind="column.title">融资中的项目</h2>
+                <a ng-if="$index == 0" href="/search/?status=4" class="lx-btn-def">查看更多</a>
+                <a ng-if="$index == 1" href="/search/" class="lx-btn-def">查看更多</a>
+                <a ng-if="$index == 2" href="/search/?status=200" class="lx-btn-def">查看更多</a>
+            </div>
+            <div ng-cloak class="sb-div">
+                <!--横项-->
+                <div class="transverse" ng-repeat="item in home.project[$index].item">
+                    <a ng-href="/project/?id={{item.project.objectId}}">
+                        <div class="transverse-project-img" ng-style="opt.bg(item.project.image)">
+                            <span ng-bind="item.project.types.text"></span>
+                        </div>
+                    </a>
+                    <div class="transverse-project-content">
+                        <a ng-href="/project/?id={{item.project.objectId}}"><h2 ng-bind="item.project.title">爬爬步步北京朝阳店</h2></a>
+                        <h3 ng-bind="item.project.summary">爬爬步步是坚持品质，定制与创新</h3>
+                        <div class="content-proj" ng-if="item.project.status.code != 3">
+                            <div class="transverse-project-list" ng-if="item.project.types.code != 'normal'">
+                                <em ng-if="item.project.types.code == 'priority' || item.project.types.code =='newhead'">预期收益</em>
+                                <span ng-if="item.project.types.code == 'priority' || item.project.types.code =='newhead'">
+                                    {{item.project.profit}}% <span ng-if="item.project.profitOver && item.project.profitOver != ''"> &nbsp;- &nbsp; {{item.project.profitOver}}%</span>
+                                </span>
+                            </div>
+                            <div class="transverse-project-list" ng-if="item.project.types.code != 'normal'">
+                                <em>起投金额</em>
+                                <span ng-bind="item.project.itemValue | moneyConvert"></span>
+                            </div>
+                            <div class="transverse-project-list" ng-if="item.project.types.code != 'normal'">
+                                <em>投资周期</em>
+                                <span ng-bind="item.project.profitDate"></span>
+                            </div>
+                            <div class="transverse-project-list" ng-if="item.project.types.code == 'normal'">
+                                <em ng-if="item.project.types.code == 'normal'">起投金额</em>
+                                <span ng-if="item.project.types.code == 'normal'" ng-bind="item.project.itemValue | moneyConvert"></span>
+                            </div>
+                            <div class="transverse-project-list" ng-if="item.project.types.code == 'normal'">
+                                <em ng-if="item.project.types.code == 'normal'">融资目标</em>
+                                <span ng-if="item.project.types.code == 'normal'" ng-bind="item.project.targetValue | moneyConvert"></span>
+                            </div>
+                            <div class="transverse-project-list" ng-if="item.project.types.code == 'normal'">
+                                <em ng-if="item.project.types.code == 'normal'">已投人数</em>
+                                <span ng-if="item.project.types.code == 'normal'" ng-bind="item.project.count+'人'"></span>
+                            </div>
+                            <div class="list-project-speed list-ge">
+                                <div ng-if="item.project.status.code < 200">
+                                    <!--百分之五十之前-->
+                                    <div ng-if="item.project.progress < 50" class="lx-bubble-left-bottom lx-font-color1 lx-font-size12" style="left:{{item.project.progress}}%"> {{'已融资'}}{{item.project.value | moneyConvert}}</div>
+                                    <!--百分之五十之后-->
+                                    <div ng-if="item.project.progress >= 50" class="lx-bubble-right-bottom lx-font-color1 lx-font-size12" style="right:{{100 - item.project.progress}}%">{{'已融资'}}{{item.project.value | moneyConvert}}</div>
+                                </div>
+                                <!--成功 -->
+                                <div ng-if="item.project.status.code >= 200" class="lx-bubble-right-bottom-success lx-font-size12" style="right:0%">融资成功</div>
+                                <!--滚动条-->
+                                <div class="lx-process-par">
+                                    <!--未完成-->
+                                    <div ng-if="item.project.status.code < 200" class="lx-process" style="width:{{item.project.progress}}%"></div>
+                                    <!--已完成-->
+                                    <div ng-if="item.project.status.code >= 200" class="lx-process lx-process-success" style="width:100%"></div>
+                                </div>
+                                <!--募集总数（未完成）-->
+                                <div ng-if="item.project.status.code < 200" class="lx-bubble-right-top lx-font-color1 lx-font-size12" ng-bind-template="{{'融资目标'}}{{item.project.targetValue | moneyConvert}}"></div>
+                                <!--募集总数（已完成）-->
+                                <div ng-if="item.project.status.code >= 200" class="lx-bubble-right-top-success  lx-font-size12" ng-bind-template="{{'融资目标'}}{{item.project.targetValue | moneyConvert}}"></div>
+                            </div>
+                        </div>
+                        <div class="witer-bar" ng-if="item.project.status.code == 3">
+                            <div class="witer-first">
+                                <em></em>
+                                <p>项目预热中，即将上线，敬请期待！</p>
+                            </div>
+                        </div>
+                        <div class="labels labels-first">
+                            <!-- 标签 -->
+                            <span ng-repeat="tag in opt.tagsHander(item.project.tags)" ng-bind="tag"></span>
+                        </div>
+                    </div>
+                </div>
+                <!--竖屏-->
+                <div class="vertical" ng-repeat="item in home.project[$index].items">
+                    <a ng-href="/project/?id={{item.project.objectId}}">
+                        <div class="transverse-project-img" ng-style="opt.bg(item.project.image)">
+                            <span ng-bind="item.project.types.text"></span>
+                        </div>
+                    </a>
+                    <div class="transverse-project-content">
+                        <a ng-href="/project/?id={{item.project.objectId}}"><h2 ng-bind="item.project.title">爬爬步步北京朝阳店</h2></a>
+                        <h3 ng-bind="item.project.summary">爬爬步步是坚持品质，定制与创新</h3>
+                        <div class="content-proj" ng-if="item.project.status.code != 3">
+                            <div class="transverse-project-list" ng-if="item.project.types.code != 'normal'">
+                                <em ng-if="item.project.types.code == 'priority' || item.project.types.code =='newhead'">预期收益</em>
+                                <span ng-if="item.project.types.code == 'priority' || item.project.types.code =='newhead'">
+                                    {{item.project.profit}}% <span ng-if="item.project.profitOver && item.project.profitOver != ''"> &nbsp;- &nbsp;{{item.project.profitOver}}%</span>
+                                </span>
+                            </div>
+                            <div class="transverse-project-list" ng-if="item.project.types.code != 'normal'">
+                                <em>起投金额</em>
+                                <span ng-bind="item.project.itemValue | moneyConvert"></span>
+                            </div>
+                            <div class="transverse-project-list" ng-if="item.project.types.code != 'normal'">
+                                <em>投资周期</em>
+                                <span ng-bind="item.project.profitDate">3个月</span>
+                            </div>
+                            <div class="transverse-project-list" ng-if="item.project.types.code == 'normal'">
+                                <em ng-if="item.project.types.code == 'normal'">起投金额</em>
+                                <span ng-if="item.project.types.code == 'normal'" ng-bind="item.project.itemValue | moneyConvert"></span>
+                            </div>
+                            <div class="transverse-project-list" ng-if="item.project.types.code == 'normal'">
+                                <em ng-if="item.project.types.code == 'normal'">融资目标</em>
+                                <span ng-if="item.project.types.code == 'normal'" ng-bind="item.project.targetValue | moneyConvert"></span>
+                            </div>
+                            <div class="transverse-project-list" ng-if="item.project.types.code == 'normal'">
+                                <em ng-if="item.project.types.code == 'normal'">已投人数</em>
+                                <span ng-if="item.project.types.code == 'normal'" ng-bind="item.project.count+'人'"></span>
+                            </div>
+                            <div class="list-project-speed">
+                                <!--筹资未完成-->
+                                <div ng-if="item.project.status.code < 200">
+                                    <!--百分之五十之前-->
+                                    <div ng-if="item.project.progress < 50" class="lx-bubble-left-bottom lx-font-color1 lx-font-size12" style="left:{{item.project.progress}}%" ng-bind-template="{{'已融资'}}{{item.project.value | moneyConvert}}">已融资 20 万元</div>
+                                    <!--百分之五十之后-->
+                                    <div ng-if="item.project.progress >= 50" class="lx-bubble-right-bottom lx-font-color1 lx-font-size12" style="right:{{100 - item.project.progress}}%" ng-bind-template="{{'已融资'}}{{item.project.value | moneyConvert}}">已融资 20 万元</div>
+                                </div>
+                                <!--筹资已完成-->
+                                <div ng-if="item.project.status.code >= 200">
+                                    <div class="lx-bubble-right-bottom-success lx-font-size12" style="right:0%">融资成功</div>
+                                </div>
+                                <!--滚动条-->
+                                <div class="lx-process-par">
+                                    <!--未完成-->
+                                    <div ng-if="item.project.status.code < 200" class="lx-process" style="width:{{item.project.progress}}%"></div>
+                                    <!--已完成-->
+                                    <div ng-if="item.project.status.code >= 200" class="lx-process lx-process-success" style="width:100%"></div>
+                                </div>
+                                <!--募集总数 未成功-->
+                                <div ng-if="item.project.status.code < 200" class="lx-bubble-right-top lx-font-color1 lx-font-size12" ng-bind-template="{{'融资目标'}}{{item.project.targetValue | moneyConvert}}">
+                                </div>
+                                <!--募集总数 成功-->
+                                <div ng-if="item.project.status.code >= 200" class="lx-bubble-right-top-success  lx-font-size12" ng-bind-template="{{'融资目标'}}{{item.project.targetValue | moneyConvert}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="witer-bar" ng-if="item.project.status.code == 3">
+                            <div class="witer-first">
+                                <em></em>
+                                <p>项目预热中，即将上线，敬请期待！</p>
+                            </div>
+                        </div>
+                        <div class="labels">
+                            <!-- 标签 -->
+                            <span ng-repeat="tag in opt.tagsHander(item.project.tags)" ng-bind="tag"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--点石动态-->
+    <div class="dynamic">
+        <div class="pc-main">
+            <div class="subject">
+                <h2>点石动态</h2>
+                <a href="/article/?classify=公司动态" class="lx-btn-def">查看更多</a>
+            </div>
+            <div>
+                <div class="stone" ng-repeat="article in home.articles">
+                    <a target="_blank" ng-href="/article/i/?id={{article.objectId}}"><em ng-style="opt.bg(article.image)"></em> </a>
+                    <span><a ng-href="/article/i/?id={{article.objectId}}" target="_blank" ng-bind="article.title"></a> </span>
+                </div>
+            </div>
+            <div class="column">
+                <div class="notice">
+                    <div class="tip">
+                        <h2>官方公告</h2>
+                        <a></a>
+                    </div>
+                    <div class="link">
+                        <a target="_blank" ng-href="/article/i/?id={{item.objectId}}" ng-bind="item.title" ng-repeat="item in home.bulletin">爬爬步步大礼包火热出炉，投资人领奖公告</a>
+                    </div>
+                </div>
+                <div class="notice">
+                    <div class="tip">
+                        <h2>媒体报道</h2>
+                        <a href="/article/?classify=媒体报道">更多></a>
+                    </div>
+                    <div class="link">
+                        <a target="_blank" ng-href="/article/i/?id={{item.objectId}}" ng-bind="item.title" ng-repeat="item in home.news">爬爬步步大礼包火热出炉，投资人领奖公告</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--轮播-->
+    <div id="slideBox" class="slideBottom" lx-scroll-lazy="slideBottomLoading">
+        <h2 class="bang-two">点石邦客的投资理财观</h2>
+        <h3 class="bang-thire">他们都在点石微投行</h3>
+        <!--小圆点-->
+        <div class="hd hd-right">
+            <ul>
+                <li class="on"></li>
+                <li class=""></li>
+                <li class=""></li>
+                <li class=""></li>
+            </ul>
+        </div>
+        <!--图片-->
+        <div class="bd dp">
+            <ul>
+                <li>
+                    <a target="_blank">
+                        <div style="background:url(static/images/gp1_banner_bg.jpg) no-repeat center;background-size: cover"></div>
+                        <div class="dialog">
+                            <h2>博物馆设计师、清华美院博士后 — 金海鑫</h2>
+                            <p>蕃茄田的投资人，一定是有着对孩子的爱，基于保护和发展中国孩子创意能力的想法，才会去做艺术教育而非应试教育的。</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank">
+                        <div style="background:url(static/images/gp2_banner_bg.jpg) no-repeat center;background-size: cover"></div>
+                        <div class="dialog">
+                            <h2>财务专家 —李辰</h2>
+                            <p>互联网金融是新兴事物，通过专业的平台，可以进入到未上市公司股权一级市场的投资，成为被投企业的股东，我很乐于去尝试。</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank">
+                        <div style="background:url(static/images/gp3_banner_bg.jpg) no-repeat center;background-size: cover"></div>
+                        <div class="dialog">
+                            <h2>全职妈妈 — 黄海燕</h2>
+                            <p>家庭理财大有可为。如何打理生活，让自己过得更精彩，同时做好理财，这是每一位全职妈妈都必须认真对待的必修课。</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank">
+                        <div style="background:url(static/images/gp4_banner_bg.jpg) no-repeat center;background-size: cover"></div>
+                        <div class="dialog">
+                            <h2>全国性社会团体组织高管 — 夏文俊</h2>
+                            <p>我不太喜欢借助金融机构来代理，更欣赏较为直接的理财方式，也会和朋友关注一些股权投资类的项目，我很希望知道自己的投资支持了什么样的企业。</p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!--左右切换-->
+        <a class="prev" href="javascript:void(0)"></a>
+        <a class="next" href="javascript:void(0)"></a>
+    </div>
+    <!--合作伙伴-->
+    <div class="friend">
+        <div class="pc-five">
+            <h2>投资机构&amp;战略合作</h2>
+            <h3>为您打造安全可靠的投资平台</h3>
+            <div class="friend-list">
+                <div class="slideTxtBox">
+                    <div class="hd">
+                        <ul>
+                            <li class="on">投资机构</li>
+                            <li class="">战略合作</li>
+                        </ul>
+                    </div>
+                    <div class="bd">
+                        <ul class="one">
+                            <li>
+                                <div class="friend-strategy ">
+                                    <img src="static/images/logo_telescope.png ">
+                                    <p>中国最成功的民营连锁企业——“家世界”的家族基金，创始人杜厦先生曾位列“福布斯2004中国富豪榜”第8名。</p>
+                                </div>
+                                <div class="friend-strategy ">
+                                    <img src="static/images/logo_century.png ">
+                                    <p>是中国500强企业世纪金源集团在金融服务业领域的金控平台公司。世纪金源是著名实业家、爱国华侨黄如论先生创办的综合性、跨行业国际集团。
+                                    </p>
+                                </div>
+                                <div class="friend-strategy ">
+                                    <h2>徐春林</h2>
+                                    <p>九鼎投资早期天使投资人，第一任董事长，现九鼎投资第二大股东，曾任上市公司江山化工（002061）董事长、浙江省江山市副市长、衢州市体改委主任。</p>
+                                </div>
+                                <div class="friend-strategy ">
+                                    <h2>无锡中住集团</h2>
+                                    <p>上市公司天泽信息（300209）第一大股东。</p>
+                                </div>
+                                <div class="friend-strategy ">
+                                    <h2>陈铸</h2>
+                                    <p>江苏省年轻企业家、投资家，所创立的德乐科技被上市公司胜利精密溢价收购，后创立中国最大的智能终端B2B电商企业——易直供，同时是乐视手机第四大股东。</p>
+                                </div>    
+                            </li>
+                        </ul>
+                        <ul class="one ">
+                            <li>
+                                <div class="friend-strategy ">
+                                    <img src="static/images/Bitmap_logo.png ">
+                                    <p>专注于互联网支付业务的第三方平台，国内领先的在线支付、在线交易管理、资金管理，与国内外100余家银行达成合作伙伴关系。</p>
+                                </div>
+                                <div class="friend-strategy ">
+                                    <img src="static/images/lianlianpay_logo.png ">
+                                    <p>具有互联网支付、移动支付、基金第三方支付牌照成立于2003年，注册资金1.05亿元，荣获2015年“互联网金融风控奖”。
+                                    </p>
+                                </div>
+                                <div class="friend-strategy ">
+                                    <img src="static/images/mysign_logo.png ">
+                                    <p>国内最大的第三方电子签约云平台，唯一通过ISO27001安全管理认证，唯一后台对接公证处的电子签约企业。提供具有法律效力的电子签名。</p>
+                                </div>
+                                <div class="friend-strategy ">
+                                    <img src="static/images/insurance_logo.png ">
+                                    <p>创始于香港，60余年历史，海航资本控股公司成员企业。首家通过CCCS四星级认证的财险公司，为点石微投行每位投资人提供资金损失责任险。</p>
+                                </div>
+                                <div class="friend-strategy ">
+                                    <img src="static/images/logo_zhongding.png ">
+                                    <p>中鼎密封件股份有限公司（000887）创建于1980年，总资产28亿元，是一家以机械基础件和汽车零部件为主导的国家大型现代化企业。</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="fast" ng-if="user.error == '请登录后再试'">
+        <div class="pc-five">
+            <h2>立即注册成为点石微投行成员</h2>
+            <h3>开启您的财富之旅</h3>
+            <% include  home/login.html  %>
+        </div>
+    </div>
+    <% include common/footer.html  %>
+    <!-- build:js /static/dist/scripts/home.js -->
+    <script type="text/javascript" src="/static/resources/jq-plugins/jquery.SuperSlide.2.1.1.js"></script>
+    <script type="text/javascript" src="/static/resources/app/controller/home.controller.js"></script>
+    <script type="text/javascript" src="/static/resources/app/service/home.service.js"></script>
+    <!-- endbuild -->	
+    
+    <script type="text/javascript" src="http://player.youku.com/jsapi"></script>
+</body>
+
+</html>
