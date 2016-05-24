@@ -11,7 +11,6 @@ module.exports = {
 	router : function(app){
 		app.use('/', routes);
 		app.use('/users', users);
-		app.use('/common', common);
 		proxy.setProxy(app);
 	},
 	/**
