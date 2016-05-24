@@ -1,0 +1,12 @@
+angular.module("lx-directive",["ui.router",
+                               "w5c.validator",
+                               "lx.scrollLazy",
+                               "lx.formvalidate",
+                               "lx.repeat",
+                               "lx.tips",
+                               "lx.popover",
+                               "lx.pagination",
+                               "ngFileUpload",
+                               "ngSanitize",
+                               "lx.phoen.msg.tel"
+                               ]);
