@@ -5,19 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var config = require('./config');
-var ejs = require('ejs');
-
+var engine = require('./engine');
 
 var app = express();
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-
-//设置模板引擎
-app.set('view engine', 'html');
-
-//设置引擎后缀.
-app.engine('.html', ejs.__express);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, '/public/images/', 'favicon.ico')));
@@ -28,8 +18,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 config.router(app);
-config.ejs(ejs);
-
+engine.init(app)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
