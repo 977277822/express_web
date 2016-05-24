@@ -1,4 +1,4 @@
-var routes = require('./routes/index');
+var index = require('./routes/index');
 var users = require('./routes/users');
 
 var proxy = require('./proxy');
@@ -11,7 +11,7 @@ module.exports = {
 	router : function(app){
 		app.use('/', routes);
 		app.use('/users', users);
-		proxy.setProxy(app);
+		proxy.setProxy(index);
 	},
 	/**
 	 * 渲染引擎配置
