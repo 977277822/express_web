@@ -1,0 +1,26 @@
+<!--
+	描述：快速注册
+-->
+<form name="joinForm" class="w5c-form" novalidate ng-controller="loginController" w5c-form-validate="vm.validateOptions">
+	<span class="form-error" ng-bind="formObject.formError"></span>
+	<input type="password" style="display: none;" />
+	<ul>
+		<li>
+			<input name="phone" maxlength="20" ng-model="formObject.phone" type="number" placeholder="请输入手机号码 " required ng-minlength="11">
+		</li>
+		<li>
+			<input type="password" name="pwd" ng-minlength="6" maxlength="20" ng-pattern="/^[0-9A-Za-z_]{1,16}$/" type="text" ng-model="formObject.pwd" placeholder="请输入密码 " required>
+		</li>
+		<li>
+			<img class="validcode-btn" ng-src="{{'/api/v2/account/fast/code?r=' + formObject.imgValidTag}}" ng-click="formObject.onImgValidCode()"/>
+			<input name="imgValidCode" maxlength="6" ng-model="formObject.imgValidCode" ng-pattern="/^[0-9A-Za-z_]{1,16}$/" type="text " placeholder="请输入图片验证码 " required>
+		</li>
+		<li>
+			<span class="validcode-btn" ng-disabled="true" ng-click="formObject.onValidCode(joinForm)" ng-bind="formObject.validCodeText"></span>
+			<input name="validCode" maxlength="6" ng-model="formObject.validCode" ng-pattern="/^[0-9A-Za-z_]{1,16}$/" type="text " placeholder="请输入验证码 " required>
+		</li>
+	</ul>
+	<div class="sb-button">
+		<button type="button" w5c-form-submit="formObject.submitForm(joinForm)" ng-disabled="!joinForm.$valid" class="lx-btn-submit ">快速注册</button>
+	</div>
+</form>

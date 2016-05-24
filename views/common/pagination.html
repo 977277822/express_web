@@ -1,0 +1,12 @@
+<div class="paging" ng-cloak>
+	<div class="previous-page" ng-click="$page.pageUp()" ng-if="$lxPager.pageUp">
+		<em><</em>上一页
+	</div>
+	<span>
+				<a ng-class="{'active' : $lxPager.pageIndex == item}" ng-click="$page.changePage(item)" ng-repeat = "item in $lxPager.pageList" ng-bind="item"></a>
+			</span>
+	<div class="next-page" ng-click="$page.pageDown()" ng-if="$lxPager.pageDown">
+		下一页<em>></em>
+	</div>
+
+</div>
