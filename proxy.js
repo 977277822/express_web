@@ -11,6 +11,6 @@ var apiProxy = proxy(apiUrl, {
 
 module.exports = {
 	setProxy : function(app){
-		app.use("/api/*", apiProxy);
+		app.use("/api/*", apiProxy); 
 	}
 }
