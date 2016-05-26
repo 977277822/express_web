@@ -4,8 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var config = require('./config');
+var routerConfig = require('./router');
 var engine = require('./engine');
+var fs = require("fs");
 
 var app = express();
 
@@ -17,8 +18,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-config.router(app);
-engine.init(app)
+if(fs.statSync(path.join(__dirname,"forward.json"))){
+	app.forward = JSON.parse(fs.readFileSync(path.join(__dirname,"forward.json")));
+}
+
+//配置路由
+routerConfig.router(app);
+//配置模板引擎
+engine.init(app);
+
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

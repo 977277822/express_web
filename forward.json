@@ -1,0 +1,6 @@
+ 
+{
+	"/api/*" : "http://sss.cn",
+	"/tool/*" : "http://sss.cn",
+	"/image/*" : "http://sss.cn"
+}
